@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.WeatherAPP" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Настройте свою тему здесь.-->
+    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Настройте свою тему здесь. -->
+    </style>
+</resources>
