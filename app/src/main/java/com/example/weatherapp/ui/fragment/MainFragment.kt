@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
     )
     private lateinit var pLauncher: ActivityResultLauncher<String>
     private lateinit var binding: FragmentMainBinding
-    private val model: MainViewModel by activityViewModels ()
+    private val model: MainViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -64,7 +64,7 @@ class MainFragment : Fragment() {
         init()
         udateCurrentCard()
 
-        requestWeatherData( "Moscow")
+        requestWeatherData("Moscow")
 
     }
 
@@ -79,14 +79,14 @@ class MainFragment : Fragment() {
     }.attach()
 
     private fun udateCurrentCard() = with(binding) {
-        model.liveDataCurrent.observe(viewLifecycleOwner){
+        model.liveDataCurrent.observe(viewLifecycleOwner) {
             val maxMinTemp = "${it.maxTemp}°C/${it.minTemp}°C"
             tvData.text = it.time
             Picasso.get().load(it.imageUrl).into(imWeather)
             tvCity.text = it.city
             tvTemperature.text = it.currentTemp
             tvCondition.text = it.condition
-            tvMaxMin.text =maxMinTemp
+            tvMaxMin.text = maxMinTemp
 
         }
     }
@@ -118,11 +118,12 @@ class MainFragment : Fragment() {
             url,
             {
 
-                result -> parseWeatherData(result)
+                    result ->
+                parseWeatherData(result)
             },
 
-            {
-                error-> Log.d("My Log", "Error: $error")
+            { error ->
+                Log.d("My Log", "Error: $error")
             }
 
         )
@@ -131,20 +132,20 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun parseWeatherData(result: String){
+    private fun parseWeatherData(result: String) {
         val mainObject = JSONObject(result)
         val list = parseDays(mainObject)
         purseCurrentData(mainObject, list[0])
     }
 
     private fun parseDays(mainObject: JSONObject): List<WeatherModel> {
-            val list = ArrayList<WeatherModel>()
+        val list = ArrayList<WeatherModel>()
         //get JSON Array
-            val daysArray = mainObject.getJSONObject("forecast")
-                .getJSONArray("forecastday")
+        val daysArray = mainObject.getJSONObject("forecast")
+            .getJSONArray("forecastday")
         val name = mainObject.getJSONObject("location").getString("name")
-        for (i in 0 until daysArray.length()){
-            val day = daysArray [i] as JSONObject
+        for (i in 0 until daysArray.length()) {
+            val day = daysArray[i] as JSONObject
             val item = WeatherModel(
                 name,
                 day.getString("date"),
@@ -163,14 +164,12 @@ class MainFragment : Fragment() {
         return list
     }
 
-    private fun purseCurrentData(mainObject: JSONObject, weatherItem:WeatherModel) {
-        val item = WeatherModel (
+    private fun purseCurrentData(mainObject: JSONObject, weatherItem: WeatherModel) {
+        val item = WeatherModel(
             mainObject.getJSONObject("location").getString("name"),
             mainObject.getJSONObject("current").getString("last_updated"),
-            mainObject.getJSONObject("current").
-            getJSONObject("condition").getString("text"),
-            mainObject.getJSONObject("current").
-            getJSONObject("condition").getString("icon"),
+            mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
+            mainObject.getJSONObject("current").getJSONObject("condition").getString("icon"),
             mainObject.getJSONObject("current").getString("temp_c"),
             weatherItem.maxTemp,
             weatherItem.minTemp,
