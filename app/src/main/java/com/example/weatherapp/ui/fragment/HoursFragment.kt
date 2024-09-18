@@ -13,7 +13,6 @@ import com.example.weatherapp.adapters.WeatherModel
 import com.example.weatherapp.databinding.FragmentHoursBinding
 import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.concurrent.timer
 
 
 class HoursFragment : Fragment() {
