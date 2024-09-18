@@ -1,4 +1,4 @@
- package com.example.weatherapp.ui.fragment
+package com.example.weatherapp.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +16,7 @@ import org.json.JSONObject
 import kotlin.concurrent.timer
 
 
- class HoursFragment : Fragment() {
+class HoursFragment : Fragment() {
 
     private lateinit var binding: FragmentHoursBinding
     private lateinit var adapter: WeatherAdapter
@@ -32,52 +32,52 @@ import kotlin.concurrent.timer
 
     }
 
-     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-         super.onViewCreated(view, savedInstanceState)
-         initRcView()
-         model.liveDataCurrent.observe(viewLifecycleOwner) {
-             adapter.submitList(getHoursList(it))
-             Log.d("My Log", "Hours: ${it.hours}")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRcView()
+        model.liveDataCurrent.observe(viewLifecycleOwner) {
+            adapter.submitList(getHoursList(it))
+            Log.d("My Log", "Hours: ${it.hours}")
 
-         }
-     }
+        }
+    }
 
-     private fun initRcView() = with(binding) {
-         rcView.layoutManager = LinearLayoutManager(activity)
-         adapter = WeatherAdapter()
-         rcView.adapter = adapter
+    private fun initRcView() = with(binding) {
+        rcView.layoutManager = LinearLayoutManager(activity)
+        adapter = WeatherAdapter()
+        rcView.adapter = adapter
 
-     }
+    }
 
-     private fun getHoursList (wItem: WeatherModel):List<WeatherModel> {
-         //что бы доставать из JSON массива часы и другие данные фуекция будет с циклом
+    private fun getHoursList(wItem: WeatherModel): List<WeatherModel> {
+        //что бы доставать из JSON массива часы и другие данные фуекция будет с циклом
 
-         // 1. прверащаем все в JSON массив
-         val hoursArray = JSONArray(wItem.hours)
+        // 1. прверащаем все в JSON массив
+        val hoursArray = JSONArray(wItem.hours)
 
-         // 2. подготавливаем список кот будем перебирать
-         val list = ArrayList<WeatherModel>()
+        // 2. подготавливаем список кот будем перебирать
+        val list = ArrayList<WeatherModel>()
 
-         //3. с помощью цикла перебираем WeatherModel и передаем это все в list
-         for (i in 0 until hoursArray.length()) {
-             val item = WeatherModel (
+        //3. с помощью цикла перебираем WeatherModel и передаем это все в list
+        for (i in 0 until hoursArray.length()) {
+            val item = WeatherModel(
                 wItem.city,
-                 (hoursArray[i] as JSONObject).getString("time"),
-                 (hoursArray[i] as JSONObject).getJSONObject("condition").getString("text"),
-                 (hoursArray[i] as JSONObject).getJSONObject("condition").getString("icon"),
-                 (hoursArray[i] as JSONObject).getString("temp_c"),
-                 "",
-                 "",
-                 "",
+                (hoursArray[i] as JSONObject).getString("time"),
+                (hoursArray[i] as JSONObject).getJSONObject("condition").getString("text"),
+                (hoursArray[i] as JSONObject).getJSONObject("condition").getString("icon"),
+                (hoursArray[i] as JSONObject).getString("temp_c"),
+                "",
+                "",
+                "",
 
 
-             )
-             list.add(item)
-         }
+                )
+            list.add(item)
+        }
 
 
-         return list
-     }
+        return list
+    }
 
     companion object {
 
