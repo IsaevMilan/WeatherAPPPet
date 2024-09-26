@@ -82,7 +82,7 @@ class MainFragment : Fragment() {
         model.liveDataCurrent.observe(viewLifecycleOwner) {
             val maxMinTemp = "${it.maxTemp}°C/${it.minTemp}°C"
             tvData.text = it.time
-            Picasso.get().load("https:" + it.imageUrl).into(imWeather)
+            Picasso.get().load("https:"+it.imageUrl).into(imWeather)
             tvCity.text = it.city
             tvTemperature.text = it.currentTemp
             tvCondition.text = it.condition
