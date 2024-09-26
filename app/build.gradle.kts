@@ -36,10 +36,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
+        buildFeatures {
 
-        viewBinding = true
-    }
+            viewBinding = true
+        }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
@@ -51,6 +51,7 @@ android {
 }
 
 dependencies {
+
 
     implementation (libs.androidx.fragment.ktx)
     implementation (libs.play.services.location)
